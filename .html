@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Our Journey 💞</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;}
+  body{overflow-x:hidden; min-height:100vh; color:#fffaf0; transition:background 20s linear;}
+
+  /* Animated gradient */
+  @keyframes gradientShift {
+    0%{background:linear-gradient(135deg,#5c4033,#ffb6c1);}
+    50%{background:linear-gradient(135deg,#ffb6c1,#5c4033);}
+    100%{background:linear-gradient(135deg,#5c4033,#ffb6c1);}
+  }
+  body { animation: gradientShift 40s ease-in-out infinite; }
+
+  /* Intro screen */
+  #intro {
+    position:fixed; top:0; left:0; width:100%; height:100%;
+    display:flex; justify-content:center; align-items:center; flex-direction:column;
+    z-index:10; opacity:1; transition:opacity 1s ease;
+  }
+  #intro h1{font-size:3rem; opacity:0; animation:fadeIn 1.5s ease forwards 0.3s; text-shadow:0 0 15px rgba(255,255,255,0.6);}
+  #intro p{font-size:1.2rem;margin-top:10px; opacity:0; animation:fadeIn 1.5s ease forwards 0.8s;}
+  @keyframes fadeIn{to{opacity:1;}}
+
+  header, main, #addMemory{opacity:0; transition:opacity 1s ease;}
+  header{text-align:center; padding:50px 20px 20px;}
+  header h1{color:#ffe4e1; font-size:2.8rem; text-shadow:0 0 15px rgba(255,255,255,0.6);}
+  header p{color:#fff5ee; font-size:1.1rem; margin-top:8px;}
+
+  main{max-width:900px; margin:0 auto; padding:20px;}
+  .milestone{
+    background-color:rgba(255,255,255,0.15);
+    border-left:6px solid #ffe4e1;
+    border-radius:15px;
+    padding:20px;
+    margin:25px 0;
+    box-shadow:0 4px 15px rgba(0,0,0,0.2);
+    animation:fadeIn 1s ease-in-out;
+    transition: transform 0.3s ease;
+  }
+  .milestone:hover{transform:translateY(-5px);}
+  .milestone h3{color:#fff; margin-bottom:10px; font-size:1.3rem;}
+  .milestone p{font-size:1rem; line-height:1.6; color:#fffaf0;}
+  .milestone img{max-width:100%; border-radius:12px; margin-top:12px; box-shadow:0 3px 10px rgba(0,0,0,0.3);}
+  
+  .expand-btn{
+    display:inline-block; margin-top:10px; background-color:#ffe4e1; color:#5c4033;
+    padding:8px 18px; border:none; border-radius:25px; cursor:pointer; font-weight:600; transition: all 0.3s ease;
+  }
+  .expand-btn:hover{background-color:#ffb6c1; color:#402b23;}
+
+  /* Expandable text animation */
+  .milestone p.more-text {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+    margin-top: 0;
+    display: block;
+  }
+  .milestone.expanded p.more-text {
+    max-height: 500px;
+    padding-top: 10px;
+  }
+
+  .heart{
+    position:fixed; color:#ffe4e1; font-size:20px; animation: float 8s linear infinite; opacity:0.8; z-index:0;
+  }
+  @keyframes float{
+    0%{transform:translateY(100vh) scale(0.5) rotate(0deg); opacity:0;}
+    20%{opacity:1;}
+    100%{transform:translateY(-10vh) scale(1.2) rotate(360deg); opacity:0;}
+  }
+
+  .music-btn{
+    position:fixed; bottom:25px; right:25px; background-color:#ffe4e1; border:none;
+    padding:12px 24px; border-radius:30px; cursor:pointer; color:#5c4033; font-weight:bold;
+    box-shadow:0 3px 10px rgba(0,0,0,0.3); transition:transform 0.3s ease, background-color 0.3s ease; z-index:2;
+  }
+  .music-btn:hover{transform:scale(1.08); background-color:#ffb6c1;}
+
+  #addMemory{
+    background:rgba(255,255,255,0.15); padding:25px; border-radius:15px; text-align:center;
+    margin-top:50px; box-shadow:0 3px 15px rgba(0,0,0,0.2);
+  }
+  #addMemory h2{color:#fff; margin-bottom:15px;}
+  #addMemory input, #addMemory textarea{
+    width:100%; padding:12px; margin:8px 0; border-radius:10px; border:none; outline:none; font-size:1rem;
+  }
+  #addMemory textarea{resize:none; height:100px;}
+  #addMemory button{
+    background-color:#ffe4e1; color:#5c4033; border:none; padding:10px 25px; border-radius:25px; font-weight:bold; cursor:pointer; transition:0.3s;
+  }
+  #addMemory button:hover{background-color:#ffb6c1;}
+
+  footer{text-align:center; margin:50px 0 20px; color:#ffe4e1; font-size:0.9rem;}
+
+  @media(max-width:600px){
+    header h1{font-size:2.2rem;} header p{font-size:1rem;}
+    .milestone{padding:15px;} .milestone h3{font-size:1.1rem;}
+    .music-btn{bottom:20px; right:20px; padding:10px 18px; font-size:0.9rem;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Intro Screen -->
+<div id="intro">
+  <h1>Our Journey 💞</h1>
+  <p>Me & My Girl — Since 2023.07.12</p>
+</div>
+
+<header>
+  <h1>Our Journey 💞</h1>
+  <p>Me & My Girl — Since 2023.07.12</p>
+</header>
+
+<main id="timeline"></main>
+
+<section id="addMemory">
+  <h2>Add New Memory 🩷</h2>
+  <input type="text" id="date" placeholder="Date (e.g. 2024.06.14)" />
+  <input type="text" id="title" placeholder="Title (e.g. Our Anniversary Dinner)" />
+  <textarea id="desc" placeholder="Short description..."></textarea>
+  <input type="file" id="photo" accept="image/*" />
+  <button onclick="addMemory()">➕ Add Memory</button>
+</section>
+
+<button class="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2023/02/14/audio_73b6f24c26.mp3?filename=soft-romantic-piano-138020.mp3" type="audio/mpeg" />
+</audio>
+
+<footer>Made with 💞 by Me, for Her — our forever story.</footer>
+
+<script>
+  // Floating hearts
+  function createHeart(){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 6 + Math.random() * 4 + "s";
+    heart.style.fontSize = 15 + Math.random() * 20 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 10000);
+  }
+  setTimeout(() => { setInterval(createHeart, 800); }, 1200);
+
+  // Music toggle
+  const music = document.getElementById("bgMusic");
+  let isPlaying = false;
+  function toggleMusic() {
+    if (!isPlaying) {
+      music.play();
+      isPlaying = true;
+      document.querySelector(".music-btn").innerText = "⏸ Pause Music";
+    } else {
+      music.pause();
+      isPlaying = false;
+      document.querySelector(".music-btn").innerText = "🎵 Play Music";
+    }
+  }
+
+  // Expand text toggle
+  function toggleExpand(btn){
+    const card = btn.parentElement;
+    card.classList.toggle("expanded");
+    btn.textContent = card.classList.contains("expanded") ? "Hide 💫" : "Read more 💕";
+  }
+
+  // Render memory object in DOM with expandable description
+  function renderMemory(card){
+    const newCard = document.createElement("div");
+    newCard.classList.add("milestone");
+
+    // Short preview for long descriptions
+    const shortDesc = card.desc.length > 100 ? card.desc.slice(0, 100) + "..." : card.desc;
+    const isExpandable = card.desc.length > 100;
+
+    newCard.innerHTML = `<h3>💞 ${card.date} — ${card.title}</h3>
+                         <p class="short-text">${shortDesc}</p>
+                         ${isExpandable ? `<p class="more-text">${card.desc}</p>
+                         <button class="expand-btn" onclick="toggleExpand(this)">Read more 💕</button>` : ""}`;
+
+    // Only add image if it exists
+    if (card.img) {
+      const img = document.createElement("img");
+      img.src = card.img;
+      newCard.appendChild(img);
+    }
+
+    document.getElementById("timeline").appendChild(newCard);
+    newCard.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  // Add memory with persistent image and expandable description
+  function addMemory() {
+    const date = document.getElementById("date").value.trim();
+    const title = document.getElementById("title").value.trim();
+    const desc = document.getElementById("desc").value.trim();
+    const photo = document.getElementById("photo").files[0];
+
+    if (!date || !title || !desc) {
+      alert("Please fill in all fields 💕");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const imgBase64 = e.target.result;
+      const newCard = { date, title, desc };
+      if (imgBase64) newCard.img = imgBase64;
+
+      const saved = JSON.parse(localStorage.getItem("memories") || "[]");
+      saved.push(newCard);
+      localStorage.setItem("memories", JSON.stringify(saved));
+
+      renderMemory(newCard);
+
+      document.getElementById("date").value = "";
+      document.getElementById("title").value = "";
+      document.getElementById("desc").value = "";
+      document.getElementById("photo").value = "";
+    };
+
+    if (photo) reader.readAsDataURL(photo);
+    else reader.onload({ target: { result: null } });
+  }
+
+  // Load memories on page load
+  function loadMemories() {
+    const saved = JSON.parse(localStorage.getItem("memories") || "[]");
+    const validMemories = saved.filter(mem => mem.date && mem.title && mem.desc);
+    validMemories.forEach(renderMemory);
+  }
+
+  // Load memories and fade in main content after intro
+  window.addEventListener("load", () => {
+    loadMemories();
+    const intro = document.getElementById("intro");
+    const header = document.querySelector("header");
+    const main = document.querySelector("main");
+    const addMem = document.querySelector("#addMemory");
+
+    setTimeout(() => {
+      intro.style.opacity = "0";
+      setTimeout(() => { intro.style.display = "none"; }, 1000);
+      header.style.opacity = "1";
+      main.style.opacity = "1";
+      addMem.style.opacity = "1";
+    }, 1800);
+  });
+</script>
+</body>
+</html>
